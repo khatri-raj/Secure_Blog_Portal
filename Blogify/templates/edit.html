@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Blog - Blog Portal{% endblock %}
+
+{% block content %}
+<section class="section py-5 bg-light">
+  <div class="container">
+    <div class="card shadow border-0 rounded-4 mx-auto" style="max-width: 800px;">
+      <div class="card-body p-5">
+        <h2 class="mb-4 text-warning fw-bold">Edit Blog Post</h2>
+        <form method="POST" enctype="multipart/form-data" action="">
+          {% csrf_token %}
+          <div class="mb-4">
+            <label for="title" class="form-label fw-semibold text-dark">Blog Title</label>
+            <input type="text" class="form-control form-control-lg rounded-3 shadow-sm" id="title" name="title" required maxlength="200"
+                   value="{{ blog.title }}" aria-describedby="titleHelp">
+            <div id="titleHelp" class="form-text text-muted">Keep it concise, max 200 characters.</div>
+          </div>
+          <div class="mb-4">
+            <label for="author" class="form-label fw-semibold text-dark">Author Name</label>
+            <input type="text" class="form-control form-control-lg rounded-3 shadow-sm" id="author" name="author" required maxlength="200"
+                   value="{{ blog.author }}" aria-describedby="authorHelp">
+            <div id="authorHelp" class="form-text text-muted">Enter your full name or pseudonym.</div>
+          </div>
+          <div class="mb-4">
+            <label for="content" class="form-label fw-semibold text-dark">Content</label>
+            <textarea class="form-control form-control-lg rounded-3 shadow-sm" id="content" name="content" rows="7" required aria-describedby="contentHelp">{{ blog.content }}</textarea>
+            <div id="contentHelp" class="form-text text-muted">Share your story or ideas in detail.</div>
+          </div>
+          <div class="mb-4">
+            <label for="status" class="form-label fw-semibold text-dark">Status</label>
+            <select class="form-select form-select-lg rounded-3 shadow-sm" id="status" name="status" required aria-describedby="statusHelp">
+              <option value="draft" {% if blog.status == 'draft' %}selected{% endif %}>Draft</option>
+              <option value="published" {% if blog.status == 'published' %}selected{% endif %}>Published</option>
+            </select>
+            <div id="statusHelp" class="form-text text-muted">Choose 'Draft' to save privately or 'Published' to share publicly.</div>
+          </div>
+          <div class="mb-4">
+            <label for="image" class="form-label fw-semibold text-dark">Upload Image (optional)</label>
+            {% if blog.image %}
+              <div class="mb-3">
+                <img src="{{ blog.image.url }}" alt="Current Image" class="img-fluid rounded-3" style="width: 100%; display: block;">
+              </div>
+            {% endif %}
+            <input class="form-control form-control-lg rounded-3 shadow-sm" type="file" id="image" name="image" accept="image/*" aria-describedby="imageHelp">
+            <div id="imageHelp" class="form-text text-muted">Upload a new image to replace the current one, or leave blank to keep it.</div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-warning btn-lg rounded-pill px-5 fw-semibold">Update Blog Post</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Card Styling */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Form Controls */
+  .form-control, .form-select {
+    border-color: #ced4da;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #4e54c8;
+    box-shadow: 0 0 0 0.25rem rgba(78, 84, 200, 0.25);
+  }
+
+  /* Button Styling */
+  .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+    transform: scale(1.05);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .btn-warning {
+      width: 100%;
+      padding: 0.75rem;
+    }
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Blog - Blog Portal{% endblock %}
+
+{% block content %}
+<section class="section py-5 bg-light">
+  <div class="container">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 800px;">
+      <div class="card-body p-5">
+        <h2 class="mb-4 text-primary fw-bold animate__animated animate__fadeIn">Add New Blog Post</h2>
+        
+        <!-- Messages/Alerts -->
+        {% if messages %}
+          <div class="mb-4">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show msg-alert" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data" action="">
+          {% csrf_token %}
+          <!-- Title -->
+          <div class="mb-4">
+            <label for="title" class="form-label fw-semibold text-dark">Blog Title</label>
+            <input 
+              type="text" 
+              class="form-control form-control-lg rounded-3 shadow-sm" 
+              id="title" 
+              name="title" 
+              required 
+              maxlength="200" 
+              placeholder="Enter blog title" 
+              aria-describedby="titleHelp"
+            >
+            <div id="titleHelp" class="form-text text-muted">Keep it concise, max 200 characters.</div>
+          </div>
+
+          <!-- Author -->
+          <div class="mb-4">
+            <label for="author" class="form-label fw-semibold text-dark">Author Name</label>
+            <input 
+              type="text" 
+              class="form-control form-control-lg rounded-3 shadow-sm" 
+              id="author" 
+              name="author" 
+              required 
+              maxlength="200" 
+              placeholder="Enter author name" 
+              aria-describedby="authorHelp"
+            >
+            <div id="authorHelp" class="form-text text-muted">Enter your full name or pseudonym.</div>
+          </div>
+
+          <!-- Content -->
+          <div class="mb-4">
+            <label for="content" class="form-label fw-semibold text-dark">Content</label>
+            <textarea 
+              class="form-control form-control-lg rounded-3 shadow-sm" 
+              id="content" 
+              name="content" 
+              rows="8" 
+              required 
+              placeholder="Write your blog content here..."
+              aria-describedby="contentHelp"
+            ></textarea>
+            <div id="contentHelp" class="form-text text-muted">Share your story or ideas in detail.</div>
+          </div>
+
+          <!-- Status -->
+          <div class="mb-4">
+            <label for="status" class="form-label fw-semibold text-dark">Status</label>
+            <select 
+              class="form-select form-select-lg rounded-3 shadow-sm" 
+              id="status" 
+              name="status" 
+              required 
+              aria-describedby="statusHelp"
+            >
+              <option value="draft" selected>Draft</option>
+              <option value="published">Published</option>
+            </select>
+            <div id="statusHelp" class="form-text text-muted">Choose 'Draft' to save privately or 'Published' to share publicly.</div>
+          </div>
+
+          <!-- Image -->
+          <div class="mb-5">
+            <label for="image" class="form-label fw-semibold text-dark">Upload Image (optional)</label>
+            <input 
+              class="form-control form-control-lg rounded-3 shadow-sm" 
+              type="file" 
+              id="image" 
+              name="image" 
+              accept="image/*" 
+              aria-describedby="imageHelp"
+            >
+            <div id="imageHelp" class="form-text text-muted">Upload a relevant image (JPEG, PNG, etc.) to enhance your post.</div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-flex justify-content-end">
+            <button 
+              type="submit" 
+              class="btn btn-primary btn-lg px-5 rounded-pill fw-semibold animate__animated animate__pulse" 
+              style="animation-iteration-count: infinite;"
+            >
+              Add Blog Post
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Include Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+  /* Card Styling */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Form Controls */
+  .form-control, .form-select {
+    border-color: #ced4da;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #4e54c8;
+    box-shadow: 0 0 0 0.25rem rgba(78, 84, 200, 0.25);
+  }
+
+  /* Button Styling */
+  .btn-primary {
+    background-color: #4e54c8;
+    border-color: #4e54c8;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #3b46a8;
+    border-color: #3b46a8;
+    transform: scale(1.05);
+  }
+
+  /* Alert Styling */
+  .msg-alert {
+    transition: opacity 1s ease;
+  }
+
+  .msg-alert.fade-out {
+    opacity: 0;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  // Fade out alerts after 2 seconds
+  setTimeout(function() {
+    const alerts = document.querySelectorAll('.msg-alert');
+    alerts.forEach(alert => {
+      alert.classList.add('fade-out');
+      alert.addEventListener('transitionend', () => alert.remove());
+    });
+  }, 2000);
+</script>
+{% endblock %}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Blog Portal{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #4e54c8, #8f94fb);
+      color: white;
+      padding: 120px 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 80px 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      transition: background-color 0.3s;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #212529;
+      color: #fff;
+      padding: 60px 0 20px;
+    }
+
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+
+    .social-icons a {
+      font-size: 1.5rem;
+      margin: 0 12px;
+      color: #adb5bd;
+      transition: color 0.2s;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+    }
+
+    /* Alerts */
+    .msg-alert {
+      transition: opacity 1s ease;
+    }
+
+    .msg-alert.fade-out {
+      opacity: 0;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section {
+        padding: 40px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header (Navbar) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Blog Portal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'add' %}">Add New Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'show' %}">Show All Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'help'%}">Help</a></li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light ms-3" href="{% url 'login' %}">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Messages/Alerts -->
+  {% if messages %}
+  <div class="container my-4">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show msg-alert" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+  <script>
+    setTimeout(function() {
+      const alerts = document.querySelectorAll('.msg-alert');
+      alerts.forEach(alert => {
+        alert.classList.add('fade-out');
+        alert.addEventListener('transitionend', () => alert.remove());
+      });
+    }, 2000);
+  </script>
+  {% endif %}
+
+  <!-- Main content -->
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-md-4">
+          <h5 class="fw-bold">Blog Portal</h5>
+          <p>Your go-to platform for sharing stories, ideas, and inspiring conversations.</p>
+        </div>
+        <div class="col-md-2">
+          <h6 class="fw-bold">Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'add' %}">Add New Blog</a></li>
+            <li><a href="{% url 'show' %}">Show All Blog</a></li>
+            <li><a href="{% url 'help'%}">Help</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="fw-bold">Contact</h6>
+          <p class="text-muted">Email: support@yourbrand.com</p>
+          <p class="text-muted">Phone: +91-12345-67890</p>
+        </div>
+        <div class="col-md-3 text-center text-md-start">
+          <h6 class="fw-bold">Follow Us</h6>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4">
+      <p class="text-center text-muted">© 2025 Secure Blog Portal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

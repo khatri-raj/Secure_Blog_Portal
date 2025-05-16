@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Blog Portal{% endblock %}
+
+{% block content %}
+<!-- Hero Banner -->
+<section class="hero text-center py-5 position-relative overflow-hidden">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeIn">Welcome to Secure Blog Portal</h1>
+    <h2 class="h3 mb-4 animate__animated animate__fadeIn" style="animation-delay: 0.2s;">With Role-Based Access Control</h2>
+    <p class="lead mb-4 mx-auto text-white animate__animated animate__fadeIn" style="max-width: 700px; animation-delay: 0.4s;">
+      A secure, scalable blog platform built with Django, featuring role-based access control (RBAC) for Admins, Editors, Authors, and Readers. Create, publish, and engage with content while ensuring data protection and proper access management.
+    </p>
+    <p class="text-white mb-5 animate__animated animate__fadeIn" style="animation-delay: 0.6s;">Features: User registration, secure login/logout, password hashing, forgot/reset password</p>
+    <a href="{% url 'show' %}" class="btn btn-outline-light btn-lg px-5 zoom-animate" style="animation-delay: 0.8s;">
+      Read Blogs
+    </a>
+  </div>
+</section>
+
+<!-- Latest Blog Posts (Unchanged) -->
+<section class="section py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5">Latest Posts</h2>
+    <div class="row g-4">
+      {% if latest_blogs %}
+        {% for blog in latest_blogs %}
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm rounded-4 blog-card position-relative" data-author="{{ blog.author }}">
+              {% if blog.image %}
+                <img src="{{ blog.image.url }}" class="card-img-top rounded-top-4" alt="Image for {{ blog.title }}" loading="lazy">
+              {% else %}
+                <img src="https://via.placeholder.com/400x200?text=Image+Not+Available" class="card-img-top rounded-top-4" alt="No image available" loading="lazy">
+              {% endif %}
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold">{{ blog.title }}</h5>
+                <p class="card-text text-muted flex-grow-1">{{ blog.content|truncatechars:100 }}</p>
+                <small class="text-muted mb-3">
+                  By <span class="author-name">{{ blog.author }}</span>
+                </small>
+                <a href="{% url 'show' %}" class="btn btn-primary btn-sm mt-auto">Read More</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12">
+          <p class="text-center text-muted">No blog posts available yet. <a href="{% url 'add' %}" class="text-primary">Add a new blog post</a>.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA (Unchanged) -->
+<section class="section text-center py-5 bg-light">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Start Your Blogging Journey</h2>
+    <p class="text-muted mb-4">Sign up and share your unique voice with the world.</p>
+    <a href="{% url 'add' %}" class="btn btn-success btn-lg px-4">Get Started</a>
+  </div>
+</section>
+
+<style>
+  /* Hero Section Enhancements */
+  .hero {
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: white;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero .btn-outline-light {
+    border-width: 2px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .hero .btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }
+
+  /* Zoom-out and Zoom-in Animation for Read Blogs Button */
+  .zoom-animate {
+    animation: zoomInOut 2s ease-in-out infinite;
+  }
+
+  @keyframes zoomInOut {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.9);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+  }
+
+  /* Latest Posts and CTA Styles (Unchanged) */
+  .blog-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: visible;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .author-name {
+    position: relative;
+    cursor: pointer;
+    color: #4e54c8;
+    font-weight: 500;
+  }
+
+  .author-name:hover::after {
+    content: attr(data-author);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #343a40;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .author-name::after {
+    content: '';
+    opacity: 0;
+  }
+
+  .btn-success {
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-success:hover {
+    background-color: #2ea043;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero .display-4 {
+      font-size: 2.5rem;
+    }
+
+    .hero .h3 {
+      font-size: 1.5rem;
+    }
+
+    .blog-card {
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>
+
+<!-- Include Animate.css for existing animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+{% endblock %}
