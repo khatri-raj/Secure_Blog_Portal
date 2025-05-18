@@ -11,8 +11,8 @@ A secure, user-friendly blogging platform built with Django, enabling users to c
 ![Home Page](Screenshots/Home3.png)
 
 
-### ➕ AddBlog
-![Add Blogs](Screenshots/AddBlog.png)
+### ➕ Add Blog
+![Add Blogs](Screenshots/AddBLog.png)
 
 ### 📄 ShowBlog
 ![Show Blogs](Screenshots/ShowBlog.png)
