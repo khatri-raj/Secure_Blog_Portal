@@ -3,11 +3,13 @@ from django.shortcuts import render, redirect
 from .models import blogify
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     latest_blogs = blogify.objects.filter(status='published').order_by('-created_at')[:3]
     return render(request, 'home.html', {'latest_blogs': latest_blogs})
 
+@login_required
 def add(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -32,6 +34,7 @@ def show(request):
     blogs = blogify.objects.all().order_by('-created_at')
     return render(request, 'show.html', {'blogs': blogs})
 
+@login_required
 def edit(request, id):
     blog = blogify.objects.get(id=id)
     if request.method == 'POST':
@@ -46,6 +49,7 @@ def edit(request, id):
         return redirect('show')
     return render(request, 'edit.html', {'blog': blog})
 
+@login_required
 def delete(request, id):
     blog = blogify.objects.get(id=id)
     blog.delete()

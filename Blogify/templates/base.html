@@ -127,9 +127,21 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'add' %}">Add New Blog</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'show' %}">Show All Blog</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'help'%}">Help</a></li>
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="btn btn-outline-light ms-3" href="{% url 'login' %}">Login</a>
+            <span class="nav-link text-white">Welcome, {{ request.user.username }}</span>
           </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light ms-2" href="{% url 'logout' %}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="btn btn-outline-light ms-2" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light ms-2" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -181,20 +193,20 @@
         </div>
         <div class="col-md-3">
           <h6 class="fw-bold">Contact</h6>
-          <p class="text-muted">Email: support@yourbrand.com</p>
-          <p class="text-muted">Phone: +91-12345-67890</p>
+          <p>Email: rajkhatri8060@gmail.com</p>
+          <p>Phone: +91-82628-13490</p>
         </div>
         <div class="col-md-3 text-center text-md-start">
           <h6 class="fw-bold">Follow Us</h6>
           <div class="social-icons">
             <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="https://github.com/khatri-raj" aria-label="Github"><i class="bi bi-github"></i></a>
+            <a href="https://www.linkedin.com/in/rajkhatri2002/" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
           </div>
         </div>
       </div>
       <hr class="my-4">
-      <p class="text-center text-muted">© 2025 Secure Blog Portal. All rights reserved.</p>
+      <p class="text-center">© 2025 Secure Blog Portal. All rights reserved.</p>
     </div>
   </footer>
 
