@@ -32,7 +32,10 @@ A secure, user-friendly blogging platform built with Django, enabling users to c
 ### 🛠️ Administrations
 ![Adminstrations](Screenshots/Adminstrations.png)
 
+
+
 🔍 Features
+
 🔐 Secure User Authentication (Signup, Login, Logout)
 
 ✍️ Create, Edit, and Delete Blog Posts
