@@ -50,7 +50,10 @@ A secure, user-friendly blogging platform built with Django, enabling users to c
 
 📨 Contact form integration (optional)
 
+
+
 🛠️ Tech Stack
+
 Backend: Python, Django
 
 Frontend: HTML5, CSS3, Bootstrap
@@ -58,6 +61,8 @@ Frontend: HTML5, CSS3, Bootstrap
 Database: SQLite (default, configurable to MySQL/PostgreSQL)
 
 Other: Django Admin, Django Forms, Authentication System
+
+
 
 📁 Project Structure
 Secure_Blog_Portal/
@@ -78,11 +83,17 @@ Secure_Blog_Portal/
 ├── db.sqlite3
 └── requirements.txt
 
+
+
 🚀 Getting Started
 🔧 Prerequisites
 Python 3.7+
 
+
+
 pip package manager
+
+
 
 💻 Installation Steps
 # 1. Clone the repo
